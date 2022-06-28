@@ -8,4 +8,4 @@
 
 (require 'buttercup)
 
-(require 'lsp-cfn.el)
+(require 'lsp-cfn)

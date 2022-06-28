@@ -36,16 +36,15 @@
              '("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode))
 (add-to-list 'lsp-language-id-configuration
              '(lsp-cfn-json-mode . "cloudformation"))
-(add-hook 'lsp-cfn-json-mode-hook #'lsp-deferred)
 
 (define-derived-mode lsp-cfn-yaml-mode yaml-mode
   "CFN-YAML"
   "Simple mode to edit CloudFormation template in YAML format.")
+
 (add-to-list 'magic-mode-alist
              '("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
 (add-to-list 'lsp-language-id-configuration
              '(lsp-cfn-yaml-mode . "cloudformation"))
-(add-hook 'lsp-cfn-yaml-mode-hook #'lsp-deferred)
 
 (lsp-register-client
  (make-lsp-client :new-connection (lsp-stdio-connection "cfn-lsp-extra")

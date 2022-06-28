@@ -16,7 +16,7 @@ First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cf
   (setq company-keywords-ignore-case t))
 ```
 
-Or straight:
+Or [straight](https://github.com/radian-software/straight.el):
 
 ```elisp
 (use-package lsp-cfn
