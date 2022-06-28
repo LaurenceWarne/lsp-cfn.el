@@ -15,31 +15,43 @@
 
 (require 'js)
 (require 'lsp)
-(require 'yaml)
+(require 'yaml-mode)
 
-(define-derived-mode cfn-json-mode js-mode
+(defgroup lsp-cfn nil
+  "lsp integration for cfn-lsp-extra."
+  :prefix "lsp-cfn-"
+  :group 'applications)
+
+(defcustom lsp-cfn-verbose nil
+  "If non-nil, run cfn-lsp-extra in verbose mode."
+  :type 'boolean
+  :group 'lsp-cfn)
+
+(define-derived-mode lsp-cfn-json-mode js-mode
   "CFN-JSON"
   "Simple mode to edit CloudFormation template in JSON format."
   (setq js-indent-level 2))
 
 (add-to-list 'magic-mode-alist
-             '("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . cfn-json-mode))
+             '("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode))
 (add-to-list 'lsp-language-id-configuration
-             '(cfn-json-mode . "cloudformation"))
-(add-hook 'cfn-json-mode-hook #'lsp-deferred)
+             '(lsp-cfn-json-mode . "cloudformation"))
+(add-hook 'lsp-cfn-json-mode-hook #'lsp-deferred)
 
-(define-derived-mode cfn-yaml-mode yaml-mode
+(define-derived-mode lsp-cfn-yaml-mode yaml-mode
   "CFN-YAML"
   "Simple mode to edit CloudFormation template in YAML format.")
 (add-to-list 'magic-mode-alist
-             '("\\(---\n\\)?AWSTemplateFormatVersion:" . cfn-yaml-mode))
+             '("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
 (add-to-list 'lsp-language-id-configuration
-             '(cfn-yaml-mode . "cloudformation"))
-(add-hook 'cfn-yaml-mode-hook #'lsp-deferred)
+             '(lsp-cfn-yaml-mode . "cloudformation"))
+(add-hook 'lsp-cfn-yaml-mode-hook #'lsp-deferred)
 
 (lsp-register-client
- (make-lsp-client :new-connection (lsp-stdio-connection exe)
+ (make-lsp-client :new-connection (lsp-stdio-connection "cfn-lsp-extra")
                   :activation-fn (lsp-activate-on "cloudformation")
+                  :environment-fn (lambda ()
+                                    '(("CFN_LSP_EXTRA_VERBOSE" . lsp-cfn-verbose)))
                   :server-id 'cfn-lsp-extra))
 
 
