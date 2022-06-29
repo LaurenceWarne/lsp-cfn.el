@@ -9,13 +9,17 @@
 ;;; Commentary:
 
 ;; cfn-lsp-extra setup for lsp-mode.  A lot of the mode setup is copied from
-;; https://www.emacswiki.org/emacs/CfnLint.
+;; https://www.emacswiki.org/emacs/CfnLint.  The snippet stuff is also heavily
+;; inspired by https://github.com/AndreaCrotti/yasnippet-snippets.
 
 ;;; Code:
 
 (require 'js)
 (require 'lsp)
 (require 'yaml-mode)
+(require 'yasnippet nil 'noerror)
+
+;;; Custom variables
 
 (defgroup lsp-cfn nil
   "lsp integration for cfn-lsp-extra."
@@ -27,22 +31,62 @@
   :type 'boolean
   :group 'lsp-cfn)
 
+;;; Constants
+
+(defconst lsp-cfn-snippets-dir
+  (expand-file-name
+   "snippets"
+   (file-name-directory
+    ;; Copied from ‘f-this-file’ from f.el.
+    (cond
+     (load-in-progress load-file-name)
+     ((and (boundp 'byte-compile-current-file) byte-compile-current-file)
+      byte-compile-current-file)
+     (:else (buffer-file-name))))))
+
+(defvar yas-snippet-dirs)
+
+;;; Modes
+
 (define-derived-mode lsp-cfn-json-mode js-mode
   "CFN-JSON"
   "Simple mode to edit CloudFormation template in JSON format."
   (setq js-indent-level 2))
-
-(add-to-list 'magic-mode-alist
-             '("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode))
-(add-to-list 'lsp-language-id-configuration
-             '(lsp-cfn-json-mode . "cloudformation"))
 
 (define-derived-mode lsp-cfn-yaml-mode yaml-mode
   "CFN-YAML"
   "Simple mode to edit CloudFormation template in YAML format.")
 
 (add-to-list 'magic-mode-alist
+             '("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode))
+
+(add-to-list 'magic-mode-alist
              '("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
+
+;;; Snippet setup
+
+;;;###autoload
+(defun lsp-cfn-snippets-initialize ()
+  "Load the `lsp-cfn-snippets' snippets directory."
+  ;; NOTE: we add the symbol `lsp-cfn-snippets-dir' rather than its
+  ;; value, so that yasnippet will automatically find the directory
+  ;; after this package is updated (i.e., moves directory).
+  (when (and (fboundp 'yas--load-snippet-dirs)
+             (fboundp 'yas-load-directory))
+    (add-to-list 'yas-snippet-dirs 'lsp-cfn-snippets-dir t)
+    (yas--load-snippet-dirs)
+    (yas-load-directory lsp-cfn-snippets-dir t)))
+
+;;;###autoload
+(eval-after-load 'yasnippet
+  '(lsp-cfn-snippets-initialize))
+
+
+;;; LSP setup
+
+(add-to-list 'lsp-language-id-configuration
+             '(lsp-cfn-json-mode . "cloudformation"))
+
 (add-to-list 'lsp-language-id-configuration
              '(lsp-cfn-yaml-mode . "cloudformation"))
 

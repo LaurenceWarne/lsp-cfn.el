@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: aws
+# key: aws
+# --
+AWSTemplateFormatVersion: '2010-09-09'`(lsp-cfn-yaml-mode)`
+Resources:
+  $0

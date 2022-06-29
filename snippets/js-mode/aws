@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: aws
+# key: aws
+# --
+{`(lsp-cfn-json-mode)`
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources": {
+    $0
+  }
+}
