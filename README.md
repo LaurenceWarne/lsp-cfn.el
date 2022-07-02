@@ -4,7 +4,7 @@
 
 ## Installation
 
-First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cfn-lsp-extra`.  ~~You can then install this package from source, e.g. using ![quelpa-use-package](https://github.com/quelpa/quelpa-use-package)~~ *There currently appears to be issues with the quelpa installation.*:
+First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cfn-lsp-extra`.  ~~You can then install this package from source, e.g. using ![quelpa-use-package](https://github.com/quelpa/quelpa-use-package):~~ *There currently appears to be issues with the quelpa installation.*
 
 ```elisp
 (use-package lsp-cfn
@@ -15,7 +15,7 @@ First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cf
          (lsp-cfn-json-mode . lsp-deferred))
   :config
   (setq company-keywords-ignore-case t))
-``
+```
 
 Or [straight](https://github.com/radian-software/straight.el):
 

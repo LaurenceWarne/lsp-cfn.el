@@ -35,7 +35,7 @@
   "The cfn-lsp-extra executable.
 
 Should be set before the package is loaded, e.g. in the :init
-block of a use-package declaration."
+block of a `use-package' declaration."
   :type 'string
   :group 'lsp-cfn)
 
