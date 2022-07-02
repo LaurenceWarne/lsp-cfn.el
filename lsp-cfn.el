@@ -17,7 +17,6 @@
 (require 'js)
 (require 'lsp)
 (require 'yaml-mode)
-(require 'yasnippet nil 'noerror)
 
 ;;; Custom variables
 
