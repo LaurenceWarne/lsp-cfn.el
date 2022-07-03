@@ -64,12 +64,6 @@ block of a `use-package' declaration."
   "CFN-YAML"
   "Simple mode to edit CloudFormation template in YAML format.")
 
-(add-to-list 'magic-mode-alist
-             '("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode))
-
-(add-to-list 'magic-mode-alist
-             '("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
-
 ;;; Snippet setup
 
 ;; Next couple of functions are modified from: https://github.com/AndreaCrotti/yasnippet-snippets

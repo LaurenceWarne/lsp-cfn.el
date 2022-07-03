@@ -9,8 +9,9 @@ First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cf
 ```elisp
 (use-package lsp-cfn
   :ensure nil
-  :demand t
   :quelpa (lsp-cfn :fetcher github :repo "LaurenceWarne/lsp-cfn.el")
+  :magic (("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode)
+          ("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
   :hook ((lsp-cfn-yaml-mode . lsp-deferred)
          (lsp-cfn-json-mode . lsp-deferred))
   :config
@@ -21,11 +22,12 @@ Or [straight](https://github.com/radian-software/straight.el):
 
 ```elisp
 (use-package lsp-cfn
-  :demand t
   :straight (lsp-cfn
 	         :type git
 	         :host github
              :repo "LaurenceWarne/lsp-cfn.el")
+  :magic (("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode)
+          ("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
   :hook ((lsp-cfn-yaml-mode . lsp-deferred)
          (lsp-cfn-json-mode . lsp-deferred))
   :config
