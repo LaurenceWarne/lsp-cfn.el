@@ -66,6 +66,11 @@ block of a `use-package' declaration."
 
 (defvar yas-snippet-dirs)
 
+(defvar lsp-cfn-yaml-mode-syntax-table
+  (let ((syntax-table (make-syntax-table yaml-mode-syntax-table)))
+    (modify-syntax-entry ?! "_" syntax-table)
+    syntax-table))
+
 ;;; Modes
 
 (define-derived-mode lsp-cfn-json-mode js-mode
