@@ -1,31 +1,14 @@
 # lsp-cfn.el
+[![MELPA](https://melpa.org/packages/lsp-cfn-badge.svg)](https://melpa.org/#/lsp-cfn)
 
 `lsp-mode` integration with [cfn-lsp-extra](https://github.com/LaurenceWarne/cfn-lsp-extra) (a Cloudformation language server), heavily inspired by https://www.emacswiki.org/emacs/CfnLint.
 
 ## Installation
 
-First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cfn-lsp-extra`.  ~~You can then install this package from source, e.g. using ![quelpa-use-package](https://github.com/quelpa/quelpa-use-package):~~ *There currently appears to be issues with the quelpa installation.*
+First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cfn-lsp-extra`.  Then you can install it from melpa:
 
 ```elisp
 (use-package lsp-cfn
-  :ensure nil
-  :quelpa (lsp-cfn :fetcher github :repo "LaurenceWarne/lsp-cfn.el")
-  :magic (("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode)
-          ("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
-  :hook ((lsp-cfn-yaml-mode . lsp-deferred)
-         (lsp-cfn-json-mode . lsp-deferred))
-  :config
-  (setq company-keywords-ignore-case t))
-```
-
-Or [straight](https://github.com/radian-software/straight.el):
-
-```elisp
-(use-package lsp-cfn
-  :straight (lsp-cfn
-	         :type git
-	         :host github
-             :repo "LaurenceWarne/lsp-cfn.el")
   :magic (("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode)
           ("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
   :hook ((lsp-cfn-yaml-mode . lsp-deferred)
