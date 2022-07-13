@@ -5,12 +5,15 @@
 
 ## Installation
 
-First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cfn-lsp-extra`.  Then you can install it from melpa:
+First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cfn-lsp-extra`.  Then you can install the package from melpa:
 
 ```elisp
 (use-package lsp-cfn
   :magic (("\\({\n *\\)? *[\"']AWSTemplateFormatVersion" . lsp-cfn-json-mode)
-          ("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode))
+          ;; SAM templates are also supported
+          ("\\({\n *\\)? *[\"']Transform[\"']: [\"']AWS::Serverless-2016-10-31" . lsp-cfn-json-mode)
+          ("\\(---\n\\)?AWSTemplateFormatVersion:" . lsp-cfn-yaml-mode)
+          ("\\(---\n\\)?Transform: AWS::Serverless-2016-10-31" . lsp-cfn-yaml-mode))
   :hook ((lsp-cfn-yaml-mode . lsp-deferred)
          (lsp-cfn-json-mode . lsp-deferred))
   :config
