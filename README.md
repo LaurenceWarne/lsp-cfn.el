@@ -17,10 +17,10 @@ First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cf
   :hook ((lsp-cfn-yaml-mode . lsp-deferred)
          (lsp-cfn-json-mode . lsp-deferred))
   :config
-  (setq company-keywords-ignore-case t))
+  (setq completion-ignore-case t))
 ```
 
-If you're using company, `(setq company-keywords-ignore-case t)` is optional, but completions will be a lot better with it.
+`(setq completion-ignore-case t)` is optional, but resource and property names are in CamelCase so you may find completion narrowing better with it.
 
 ## Usage
 
