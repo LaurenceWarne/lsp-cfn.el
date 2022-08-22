@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: sam
+# key: sam
+# --
+{`(lsp-cfn-json-mode)`
+  "Transform": "AWS::Serverless-2016-10-31"
+  "Resources": {
+    $0
+  }
+}

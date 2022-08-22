@@ -26,6 +26,6 @@ First [install](https://github.com/LaurenceWarne/cfn-lsp-extra#installation) `cf
 
 The above configuration will trigger `lsp` whenever a `json` or `yaml` is opened with the string `AWSTemplateFormatVersion:` appearing somwhere in the file.
 
-Alternatively, if you have [`yasnippet`](https://github.com/joaotavora/yasnippet) installed, from an empty file type `aws` and then tab to complete, and that will generate a template skeleton and connect to the LSP server.
+Alternatively, if you have [`yasnippet`](https://github.com/joaotavora/yasnippet) installed, from an empty file type `aws` and then tab to complete, and that will generate a template skeleton and connect to the LSP server (similarly `sam` will generate the skeleton of a SAM template).
 
 A list of currently implemented features can be found [here](https://github.com/LaurenceWarne/cfn-lsp-extra#features).
