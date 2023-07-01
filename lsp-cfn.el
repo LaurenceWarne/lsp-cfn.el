@@ -28,7 +28,7 @@
 ;;; Code:
 
 (require 'js)
-(require 'lsp)
+(require 'lsp-mode)
 (require 'yaml-mode)
 
 ;;; Custom variables
@@ -36,7 +36,7 @@
 (defgroup lsp-cfn nil
   "LSP integration for cfn-lsp-extra."
   :prefix "lsp-cfn-"
-  :group 'applications)
+  :group 'tools)
 
 (defcustom lsp-cfn-verbose nil
   "If non-nil, run cfn-lsp-extra in verbose mode."
@@ -50,6 +50,13 @@ Should be set before the package is loaded, e.g. in the :init
 block of a `use-package' declaration."
   :type 'string
   :group 'lsp-cfn)
+
+(lsp-defcustom lsp-cfn-diagnostic-publishing-method "ON_DID_CHANGE"
+  "When to publish cloudformation diagnostics.
+Valid values are \"ON_DID_CHANGE\" and \"ON_DID_SAVE\"."
+  :type '(choice (const "ON_DID_CHANGE") (const "ON_DID_SAVE"))
+  :group 'lsp-cfn
+  :lsp-path "cfn.diagnosticPublishingMethod")
 
 ;;; Constants
 
@@ -116,7 +123,16 @@ block of a `use-package' declaration."
                   :activation-fn (lsp-activate-on "cloudformation")
                   :environment-fn (lambda ()
                                     '(("CFN_LSP_EXTRA_VERBOSE" . lsp-cfn-verbose)))
-                  :server-id 'cfn-lsp-extra))
+                  :initialized-fn (lambda (workspace)
+                                    (with-lsp-workspace workspace
+                                      (lsp--set-configuration
+                                       (lsp-configuration-section "cfn"))))
+                  ;; No idea what these two do, just copied from lsp-haskell
+                  :synchronize-sections '("cfn")
+                  :language-id "cfn"
+                  :server-id 'cfn-extra))
+
+(lsp-consistency-check lsp-cfn)
 
 (provide 'lsp-cfn)
 
