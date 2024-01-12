@@ -130,7 +130,9 @@ Valid values are \"ON_DID_CHANGE\" and \"ON_DID_SAVE\"."
                   ;; No idea what these two do, just copied from lsp-haskell
                   :synchronize-sections '("cfn")
                   :language-id "cfn"
-                  :server-id 'cfn-extra))
+                  :server-id 'cfn-extra
+                  ;; Priority 1 so it takes priority over yamlls https://github.com/emacs-lsp/lsp-mode/blob/master/clients/lsp-yaml.el
+                  :priority 1))
 
 (lsp-consistency-check lsp-cfn)
 
