@@ -15,8 +15,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         emacs_version:
-          - 27.1
           - 27.2
+          - 28.2
+          - 29.1
+          - 29.2
 
     steps:
     - name: Set up Emacs
@@ -28,7 +30,7 @@ jobs:
       run: curl -fsSL https://raw.github.com/doublep/eldev/master/webinstall/github-eldev | sh
 
     - name: Check out the source code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Test the project
       run: |
